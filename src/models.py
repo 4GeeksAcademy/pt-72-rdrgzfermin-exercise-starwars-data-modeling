@@ -33,9 +33,6 @@ class Planet(Base):
     diameter = Column(Integer)
     population = Column(Integer)
 
-    def serialize(self):
-        return {}
-
 class Favorite(Base):
     __tablename__ = 'favorite'
     id = Column(Integer, primary_key=True)
@@ -47,9 +44,6 @@ class Favorite(Base):
     user = relationship("User", Column="favorites")
     planet = relationship("Planet", Column="favorites")
     character = relationship("Character", Column="favorites")
-
-    def serialize(self):
-        return {}
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
