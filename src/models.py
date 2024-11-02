@@ -7,16 +7,22 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
+    
+
+class User(Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    email = Column(String(120), unique=True, nullable=False)
+    password = Column(String(80), unique=False, nullable=False)
+    username = Column(String(100), unique=True, nullable=False)
+
+    planet = relationship('planet', back_populates="user")
+    character = relationship('character', back_populates="user")
+    favorites = relationship('Favorites', back_populates="user")
 
     def to_dict(self):
         return {}
-    
+
 class Character(Base):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
@@ -25,13 +31,13 @@ class Character(Base):
     mass = Column(Integer)
     eye_color = Column(String(255))
 
-class Planet(Base):
-    __planet__ = 'planet'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(255), nullable=False)
-    terrain = Column(String(255))
-    diameter = Column(Integer)
-    population = Column(Integer)
+#class Planet(Base):
+    #__planet__ = 'planet'
+    #id = Column(Integer, primary_key=True)
+    #name = Column(String(255), nullable=False)
+    #terrain = Column(String(255))
+    #diameter = Column(Integer)
+    #population = Column(Integer)
 
 class Favorite(Base):
     __tablename__ = 'favorite'
@@ -41,9 +47,7 @@ class Favorite(Base):
     planet_id = Column(Integer, ForeignKey("planet.id"))
     character_id = Column(Integer, ForeignKey("character.id"))
     
-    user = relationship("User", Column="favorites")
-    planet = relationship("Planet", Column="favorites")
-    character = relationship("Character", Column="favorites")
+    
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
