@@ -31,13 +31,13 @@ class Character(Base):
     mass = Column(Integer)
     eye_color = Column(String(255))
 
-#class Planet(Base):
-    #__planet__ = 'planet'
-    #id = Column(Integer, primary_key=True)
-    #name = Column(String(255), nullable=False)
-    #terrain = Column(String(255))
-    #diameter = Column(Integer)
-    #population = Column(Integer)
+class Planet(Base):
+    __tablename__ = 'planet'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False)
+    terrain = Column(Integer)
+    diameter = Column(Integer)
+    population = Column(Integer)
 
 class Favorite(Base):
     __tablename__ = 'favorite'
